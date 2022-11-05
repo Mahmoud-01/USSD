@@ -6,30 +6,39 @@ $phoneNumber = $_POST["phoneNumber"];
 $text        = $_POST["text"];
 
 if ($text == "") {
-    // This is the first request. Note how we start the response with CON
-    $response  = "CON What would you want to check \n";
-    $response .= "1. My Account \n";
-    $response .= "2. My phone number";
+    // This is the first request to the server from the callback url. 
+    $response  = "CON Welcome to USSD for Health, what would you want to check \n";
+    $response .= "1. Medical Emergency \n";
+    $response .= "2. Maternal Advice \n";
+    $response .= "3. Public Health Advice";
 
 } else if ($text == "1") {
     // Business logic for first level response
-    $response = "CON Choose account information you want to view \n";
-    $response .= "1. Account number \n";
+    $response = "CON Kindly choose the type of Emergency \n";
+    $response .= "1. Ambulance or mobile clinic request\n";
+    $response .= "2. Emergency drug request";
+    $response .= "3. Speak to Health professional";
 
-} else if ($text == "2") {
-    // Business logic for first level response
+} else if ($text == "1*1") {
+    $response = "CON Kindly select the service you want \n";
+    $response .= "1. Ambulance \n";
+    $response .= "2. Mobile Clinic \n";
+
+} else if ($text == "1*1*1") {
+    $response = "CON Kindly enter your name and location \n";
+    //$response .= " Thank $name, your ambulance is on the way to $location";
+    
+
+
+//} else if($text == "1*1") { 
+    
+
     // This is a terminal request. Note how we start the response with END
-    $response = "END Your phone number is ".$phoneNumber;
-
-} else if($text == "1*1") { 
-    // This is a second level response where the user selected 1 in the first instance
-    $accountNumber  = "ACC1001";
-
-    // This is a terminal request. Note how we start the response with END
-    $response = "END Your account number is ".$accountNumber;
+    $response = "END Your 
 
 }
 
 // Echo the response back to the API
 header('Content-type: text/plain');
-echo $response;
+ echo $response;
+?>
